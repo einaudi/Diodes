@@ -5,7 +5,7 @@ import sys
 from PyQt5.QtWidgets import QMainWindow, QWidget, QAction, QMenu, QApplication, QVBoxLayout, QHBoxLayout, QGridLayout, QPushButton
 
 from rsrc.Serial_widget import QSerial
-from rsrc.Qt_widgets import DiodeInterface
+from rsrc.Qt_widgets import DiodeInterface, DiodeCalibration
 
 class Diodes( QMainWindow ):
 
@@ -36,6 +36,8 @@ class Diodes( QMainWindow ):
 
         self.measureButton = QPushButton( 'Measure' )
 
+        self.calibration = DiodeCalibration( self.d )
+
     def init_layout( self ):
 
         layout = QVBoxLayout()
@@ -64,7 +66,11 @@ class Diodes( QMainWindow ):
         connAct = QAction( 'Choose device', self )
         connAct.triggered.connect( self.serial.exec_ )
 
-        settMenu.addAction( settAct )
+        calAct = QAction( 'Calibration', self )
+        calAct.triggered.connect( self.calibration.exec_ )
+
+        settMenu.addAction( connAct )
+        settMenu.addAction( calAct )
 
     # Actions
     def close( self ):
